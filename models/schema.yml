@@ -6,7 +6,38 @@ sources:
     tables:
       - name: sales
         identifier: raw_gz_sales
+        description: Sales of Greenweez / we have one row per product_id found in each orders_id
+        columns:
+          - name: date_date
+            description: Date of purchase
+          - name: orders_id
+            description: Unique identifier for each order
+          - name: pdt_id
+            description: Unique identifier for each product
+          - name: revenue
+            description: Revenue generated from the sale
+          - name: quantity
+            description: Quantity of products sold
+        tests:
+          - unique:
+              column_name: "CONCAT(orders_id, pdt_id)"
+
       - name: product
         identifier: raw_gz_product
+        description: Products of Greenweez
+        columns:
+          - name: products_id
+            description: Primary key - unique identifier for each product
+            tests:
+              - unique
+              - not_null
+
       - name: ship
         identifier: raw_gz_ship
+        description: Shipping data of Greenweez
+        columns:
+          - name: orders_id
+            description: Primary key - unique identifier for each order
+            tests:
+              - unique
+              - not_null
